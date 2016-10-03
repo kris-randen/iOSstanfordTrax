@@ -80,6 +80,24 @@ class GPXViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         // Dispose of any resources that can be recreated.
     }
     
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        if control == view.leftCalloutAccessoryView {
+            performSegue(withIdentifier: Constants.ShowImagesSegue, sender: view)
+        }
+    }
+    
+    // MARK: Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destination = segue.destination.contentViewController
+        let annotationView = sender as? MKAnnotationView
+        let waypoint = annotationView?.annotation as? GPX.Waypoint
+        
+        if segue.identifier == Constants.ShowImagesSegue {
+        
+        }
+    }
+    
     // MARK: Constants
     
     private struct Constants {
@@ -87,6 +105,16 @@ class GPXViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         static let AnnotationViewReuseIdentifier = "waypoint"
         static let ShowImagesSegue = "Show Image"
         static let EditUserWaypoint = "Edit Waypoint"
+    }
+}
+
+extension UIViewController {
+    var contentViewController: UIViewController {
+        if let navcon = self as? UINavigationController {
+            return navcon.visibleViewController ?? navcon
+        } else {
+            return self
+        }
     }
 }
 
