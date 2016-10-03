@@ -7,21 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D29DE381DA1EB8800264A29 /* MKGPX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D29DE371DA1EB8800264A29 /* MKGPX.swift */; };
 		0D5EC0021DA120EA00F68540 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D5EC0011DA120EA00F68540 /* AppDelegate.swift */; };
-		0D5EC0041DA120EA00F68540 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D5EC0031DA120EA00F68540 /* ViewController.swift */; };
+		0D5EC0041DA120EA00F68540 /* GPXViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D5EC0031DA120EA00F68540 /* GPXViewController.swift */; };
 		0D5EC0071DA120EA00F68540 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D5EC0051DA120EA00F68540 /* Main.storyboard */; };
 		0D5EC0091DA120EA00F68540 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D5EC0081DA120EA00F68540 /* Assets.xcassets */; };
 		0D5EC00C1DA120EA00F68540 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D5EC00A1DA120EA00F68540 /* LaunchScreen.storyboard */; };
+		0D5EC0161DA1265F00F68540 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D5EC0151DA1265F00F68540 /* Constants.swift */; };
+		0D5EC01A1DA129BC00F68540 /* gpx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D5EC0191DA129BC00F68540 /* gpx.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0D29DE371DA1EB8800264A29 /* MKGPX.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKGPX.swift; sourceTree = "<group>"; };
 		0D5EBFFE1DA120EA00F68540 /* Trax.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trax.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D5EC0011DA120EA00F68540 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		0D5EC0031DA120EA00F68540 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		0D5EC0031DA120EA00F68540 /* GPXViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPXViewController.swift; sourceTree = "<group>"; };
 		0D5EC0061DA120EA00F68540 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0D5EC0081DA120EA00F68540 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0D5EC00B1DA120EA00F68540 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0D5EC00D1DA120EA00F68540 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0D5EC0151DA1265F00F68540 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		0D5EC0191DA129BC00F68540 /* gpx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = gpx.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +60,25 @@
 		0D5EC0001DA120EA00F68540 /* Trax */ = {
 			isa = PBXGroup;
 			children = (
-				0D5EC0011DA120EA00F68540 /* AppDelegate.swift */,
-				0D5EC0031DA120EA00F68540 /* ViewController.swift */,
+				0D29DE371DA1EB8800264A29 /* MKGPX.swift */,
+				0D5EC0191DA129BC00F68540 /* gpx.swift */,
+				0D5EC0151DA1265F00F68540 /* Constants.swift */,
+				0D5EC0031DA120EA00F68540 /* GPXViewController.swift */,
 				0D5EC0051DA120EA00F68540 /* Main.storyboard */,
+				0D5EC0131DA121A400F68540 /* Supporting Files */,
+			);
+			path = Trax;
+			sourceTree = "<group>";
+		};
+		0D5EC0131DA121A400F68540 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				0D5EC0011DA120EA00F68540 /* AppDelegate.swift */,
 				0D5EC0081DA120EA00F68540 /* Assets.xcassets */,
 				0D5EC00A1DA120EA00F68540 /* LaunchScreen.storyboard */,
 				0D5EC00D1DA120EA00F68540 /* Info.plist */,
 			);
-			path = Trax;
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,8 +154,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0D5EC0041DA120EA00F68540 /* ViewController.swift in Sources */,
+				0D5EC0041DA120EA00F68540 /* GPXViewController.swift in Sources */,
 				0D5EC0021DA120EA00F68540 /* AppDelegate.swift in Sources */,
+				0D5EC0161DA1265F00F68540 /* Constants.swift in Sources */,
+				0D5EC01A1DA129BC00F68540 /* gpx.swift in Sources */,
+				0D29DE381DA1EB8800264A29 /* MKGPX.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -304,6 +324,7 @@
 				0D5EC0121DA120EA00F68540 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
