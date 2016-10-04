@@ -6,11 +6,10 @@
 //  Copyright © 2016 Campus Coach. All rights reserved.
 //
 
-import Foundation
 import UIKit
 import MapKit
 
-class GPXViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
+class GPXViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIPopoverPresentationControllerDelegate {
     
     //let url = Stanford_Vacation_URL
     
@@ -74,7 +73,7 @@ class GPXViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     @IBOutlet weak var mapView: MKMapView! {
         didSet {
-            mapView.mapType = .satellite
+            mapView.mapType = .standard
             mapView.delegate = self
         }
     }
@@ -125,9 +124,31 @@ class GPXViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             let ewc = destination as? EditWaypointViewController {
                 if let ppc = ewc.popoverPresentationController {
                     ppc.sourceRect = annotationView!.frame
+                    ppc.delegate = self
                 }
                 ewc.waypointToEdit = editableWaypoint
             }
+        }
+    }
+    
+    func popoverPresentationControllerDidDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) {
+        selectWaypoint((popoverPresentationController.presentedViewController as? EditWaypointViewController)?.waypointToEdit)
+    }
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
+        return traitCollection.horizontalSizeClass == .compact ? .overFullScreen: .none
+    }
+    
+    func presentationController(_ controller: UIPresentationController, viewControllerForAdaptivePresentationStyle style: UIModalPresentationStyle) -> UIViewController? {
+        if style == .fullScreen || style == .overFullScreen {
+            let navcon = UINavigationController(rootViewController: controller.presentedViewController)
+            let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+            visualEffectView.frame = navcon.view.bounds
+            visualEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            navcon.view.insertSubview(visualEffectView, at: 0)
+            return navcon
+        } else {
+            return nil
         }
     }
     
@@ -135,6 +156,7 @@ class GPXViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         if sender.state == .began {
             let coordinate = mapView.convert(sender.location(in: mapView), toCoordinateFrom: mapView)
             let waypoint = EditableWaypoint(latitude: coordinate.latitude, longitude: coordinate.longitude)
+            print("Latitude = \(coordinate.latitude), Longitude = \(coordinate.longitude)")
             waypoint.name = Constants.Dropped
             mapView.addAnnotation(waypoint)
         }
