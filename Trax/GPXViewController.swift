@@ -36,6 +36,8 @@ class GPXViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         mapView.showAnnotations(waypoints, animated: true)
     }
     
+    // MARK: MKMapViewDelegate
+    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         var view: MKAnnotationView! = mapView.dequeueReusableAnnotationView(withIdentifier: Constants.AnnotationViewReuseIdentifier)
         if let view = view {
@@ -44,10 +46,17 @@ class GPXViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: Constants.AnnotationViewReuseIdentifier)
             view.canShowCallout = true
         }
+        
+        view.isDraggable = annotation is EditableWaypoint
+        
         view.leftCalloutAccessoryView = nil
+        view.rightCalloutAccessoryView = nil
         if let waypoint = annotation as? GPX.Waypoint {
             if waypoint.thumbnailURL != nil {
                 view.leftCalloutAccessoryView = UIButton(frame: Constants.LeftCalloutFrame)
+            }
+            if waypoint is EditableWaypoint {
+                view.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
             }
         }
         
@@ -82,34 +91,50 @@ class GPXViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if control == view.leftCalloutAccessoryView {
-            performSegue(withIdentifier: Constants.ShowImagesSegue, sender: view)
+            performSegue(withIdentifier: Constants.ShowImageSegue, sender: view)
+        } else if control == view.rightCalloutAccessoryView {
+            performSegue(withIdentifier: Constants.EditUserWaypoint, sender: view)
         }
     }
     
     // MARK: Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destination = segue.destination.contentViewController
+        let destination = segue.destination.content
         let annotationView = sender as? MKAnnotationView
         let waypoint = annotationView?.annotation as? GPX.Waypoint
         
-        if segue.identifier == Constants.ShowImagesSegue {
-        
+        if segue.identifier == Constants.ShowImageSegue {
+            if let ivc = destination as? ImageViewController {
+                ivc.imageURL = waypoint?.imageURL
+                ivc.title = waypoint?.name
+            }
         }
     }
+    
+    @IBAction func addWayPoint(_ sender: UILongPressGestureRecognizer) {
+        if sender.state == .began {
+            let coordinate = mapView.convert(sender.location(in: mapView), toCoordinateFrom: mapView)
+            let waypoint = EditableWaypoint(latitude: coordinate.latitude, longitude: coordinate.longitude)
+            waypoint.name = Constants.Dropped
+            mapView.addAnnotation(waypoint)
+        }
+    }
+    
     
     // MARK: Constants
     
     private struct Constants {
         static let LeftCalloutFrame = CGRect(x: 0, y: 0, width: 59, height: 59)
         static let AnnotationViewReuseIdentifier = "waypoint"
-        static let ShowImagesSegue = "Show Image"
+        static let ShowImageSegue = "Show Image"
         static let EditUserWaypoint = "Edit Waypoint"
+        static let Dropped = "Dropped"
     }
 }
 
 extension UIViewController {
-    var contentViewController: UIViewController {
+    var content: UIViewController {
         if let navcon = self as? UINavigationController {
             return navcon.visibleViewController ?? navcon
         } else {
