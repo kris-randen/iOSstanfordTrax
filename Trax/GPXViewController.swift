@@ -93,11 +93,22 @@ class GPXViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         if control == view.leftCalloutAccessoryView {
             performSegue(withIdentifier: Constants.ShowImageSegue, sender: view)
         } else if control == view.rightCalloutAccessoryView {
+            mapView.deselectAnnotation(view.annotation, animated: true)
             performSegue(withIdentifier: Constants.EditUserWaypoint, sender: view)
         }
     }
     
     // MARK: Navigation
+    
+    @IBAction func updatedUserWaypoint(segue: UIStoryboardSegue) {
+        selectWaypoint((segue.source.content as? EditWaypointViewController)?.waypointToEdit)
+    }
+    
+    private func selectWaypoint(_ waypoint: GPX.Waypoint?) {
+        if waypoint != nil {
+            mapView.selectAnnotation(waypoint!, animated: true)
+        }
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destination = segue.destination.content
@@ -108,6 +119,14 @@ class GPXViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             if let ivc = destination as? ImageViewController {
                 ivc.imageURL = waypoint?.imageURL
                 ivc.title = waypoint?.name
+            }
+        } else if segue.identifier == Constants.EditUserWaypoint {
+            if let editableWaypoint = waypoint as? EditableWaypoint,
+            let ewc = destination as? EditWaypointViewController {
+                if let ppc = ewc.popoverPresentationController {
+                    ppc.sourceRect = annotationView!.frame
+                }
+                ewc.waypointToEdit = editableWaypoint
             }
         }
     }

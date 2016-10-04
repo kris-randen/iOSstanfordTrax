@@ -2,13 +2,14 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="xFF-yf-H2z">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Edit Waypoint View Controller-->
         <scene sceneID="PAn-1w-ku2">
             <objects>
-                <viewController id="sXp-Ku-LW8" sceneMemberID="viewController">
+                <viewController id="sXp-Ku-LW8" customClass="EditWaypointViewController" customModule="Trax" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="S12-EC-Vox"/>
                         <viewControllerLayoutGuide type="bottom" id="qdP-9h-HmU"/>
@@ -16,12 +17,69 @@
                     <view key="view" contentMode="scaleToFill" id="EmX-Mi-svY">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="5Rk-4E-PTB">
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="CTd-2R-wdp">
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sTI-Wp-acM">
+                                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="I9h-zx-8Rf">
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="250" id="Vwz-eZ-MY8"/>
+                                                </constraints>
+                                                <nil key="textColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Iag-cB-Oda">
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xqs-nK-eLp">
+                                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qDM-c6-G3g">
+                                                <nil key="textColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="Xqs-nK-eLp" firstAttribute="width" secondItem="sTI-Wp-acM" secondAttribute="width" id="XfD-ET-UgX"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="leadingMargin" secondItem="5Rk-4E-PTB" secondAttribute="leading" id="JtJ-ja-bUI"/>
+                            <constraint firstItem="5Rk-4E-PTB" firstAttribute="top" secondItem="S12-EC-Vox" secondAttribute="bottom" id="TYH-CD-vUm"/>
+                            <constraint firstItem="qdP-9h-HmU" firstAttribute="top" relation="greaterThanOrEqual" secondItem="5Rk-4E-PTB" secondAttribute="bottom" constant="8" symbolic="YES" id="YcT-v6-QKv"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="5Rk-4E-PTB" secondAttribute="trailing" id="eOf-oj-zbr"/>
+                        </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="88u-Sp-p2V">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="uYG-kt-R4D">
+                            <connections>
+                                <segue destination="STY-bT-2B1" kind="unwind" unwindAction="updatedUserWaypointWithSegue:" id="a39-Ic-aFc"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="infoTextField" destination="qDM-c6-G3g" id="Nbq-K4-o2g"/>
+                        <outlet property="nameTextField" destination="I9h-zx-8Rf" id="2Ya-18-7HH"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Shu-QA-DKo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="STY-bT-2B1" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2140" y="-750"/>
+            <point key="canvasLocation" x="1177" y="-707"/>
         </scene>
         <!--Trax-->
         <scene sceneID="tne-QT-ifu">
@@ -56,6 +114,9 @@
                     <connections>
                         <outlet property="mapView" destination="Qs2-L4-AuM" id="q3t-RA-hyl"/>
                         <segue destination="SRl-pc-HPZ" kind="show" identifier="Show Image" id="OWh-cU-SCb"/>
+                        <segue destination="sXp-Ku-LW8" kind="popoverPresentation" identifier="Edit Waypoint" popoverAnchorView="Qs2-L4-AuM" id="5Mg-fv-aS7">
+                            <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                        </segue>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
